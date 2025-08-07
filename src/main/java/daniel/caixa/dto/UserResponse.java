@@ -8,10 +8,13 @@ public class UserResponse {
     private String usuario;
     private String senha;
     private String nome;
-    private String email;
+    private String emailMasked;
     private UserRoles roles;
 
-//GETTERS E SETTERS
+    public UserResponse(){}
+    public UserResponse(Long id, String usuárioCriadoComSucesso) {}
+
+    //GETTERS E SETTERS
     public Long getId() {
         return id;
     }
@@ -44,12 +47,12 @@ public class UserResponse {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailMasked() {
+        return emailMasked;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailMasked(String emailMasked) {
+        this.emailMasked = emailMasked;
     }
 
     public UserRoles getRoles() {

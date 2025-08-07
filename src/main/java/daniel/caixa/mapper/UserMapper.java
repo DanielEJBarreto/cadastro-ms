@@ -2,6 +2,7 @@ package daniel.caixa.mapper;
 
 import daniel.caixa.dto.UserRequest;
 import daniel.caixa.dto.UserResponse;
+import daniel.caixa.entity.EmailUtils;
 import daniel.caixa.entity.Usuario;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -12,7 +13,7 @@ public class UserMapper {
         Usuario b = new Usuario();
         b.setId(dto.getId());
         b.setUsuario(dto.getUsuario());
-        b.setSenha(dto.getSenha());
+        b.setSenhaHash(dto.getSenha());
         b.setNome(dto.getNome());
         b.setEmail(dto.getEmail());
         b.setRoles(dto.getRoles());
@@ -23,9 +24,9 @@ public class UserMapper {
         UserResponse dto = new UserResponse();
         dto.setId(b.getId());
         dto.setUsuario(b.getUsuario());
-        dto.setSenha(b.getSenha());
+        dto.setSenha(b.getSenhaHash());
         dto.setNome(b.getNome());
-        dto.setEmail(b.getEmail());
+        dto.setEmailMasked(EmailUtils.maskEmail(b.getEmail()));
         dto.setRoles(b.getRoles());
         return dto;
     }

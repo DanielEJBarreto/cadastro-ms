@@ -3,6 +3,7 @@ package daniel.caixa.dto;
 
 import daniel.caixa.entity.UserRoles;
 import io.smallrye.common.constraint.NotNull;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserRequest {
@@ -19,7 +20,8 @@ public class UserRequest {
     @NotNull
     private String nome;
 
-    @NotNull
+    @NotBlank
+    @Email
     private String email;
 
     private UserRoles roles = UserRoles.USUARIO;
@@ -62,7 +64,7 @@ public class UserRequest {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmailMasked(String email) {
         this.email = email;
     }
 

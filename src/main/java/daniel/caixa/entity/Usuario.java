@@ -17,7 +17,7 @@ public class Usuario extends PanacheEntityBase {
     private String usuario;
 
     @NotNull
-    private String senha;
+    private String senhaHash;
 
     @NotNull
     private String nome;
@@ -46,12 +46,12 @@ public class Usuario extends PanacheEntityBase {
         this.usuario = usuario;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getSenhaHash() {
+        return senhaHash;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSenhaHash(String senhaHash) {
+        this.senhaHash = senhaHash;
     }
 
     public String getNome() {
