@@ -5,6 +5,7 @@ import daniel.caixa.dto.UserRequest;
 import daniel.caixa.dto.UserResponse;
 import daniel.caixa.entity.EmailUtils;
 import daniel.caixa.entity.Usuario;
+import daniel.caixa.exception.UserAlreadyExists;
 import daniel.caixa.exception.UserNotFoundException;
 import daniel.caixa.mapper.UserMapper;
 import daniel.caixa.repository.UserRepository;
@@ -27,11 +28,17 @@ public class UserService {
     public UserResponse findById(Long id) {
         return repository.findByIdOptional(id)
                 .map(mapper::toResponse)
-                .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
     }
 
     @Transactional
     public UserResponse createUser(UserRequest dto) {
+
+        // Confere se o usuario já existe
+        if (repository.findByUsuario(dto.getUsuario()) != null){
+            throw new UserAlreadyExists("User already exists!");
+        }
+
         // Hashear a senha antes de criar a entidade
         String senhaHash = BCrypt.withDefaults()
                 .hashToString(12, dto.getSenha().toCharArray());
@@ -52,18 +59,10 @@ public class UserService {
         return response;
     }
 
-
-//    @Transactional
-//    public UserResponse createUser(UserRequest dto){
-//        Usuario entity = mapper.toEntity(dto);
-//        repository.persist(entity);
-//        return mapper.toResponse(entity);
-//    }
-
     @Transactional
     public void deleteUser(Long userId){
         Usuario usuario = repository.findByIdOptional(userId)
-                .orElseThrow(() -> new UserNotFoundException("Booking not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         usuario.delete();
     }
